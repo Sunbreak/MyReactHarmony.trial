@@ -1,40 +1,46 @@
+
 import * as React from 'react';
-import {Text, View, StyleSheet, Pressable} from 'react-native'; //注入组件
+import {Text, View, StyleSheet, Pressable} from 'react-native';//注入组件
+import { CustomNativeComponentTest } from './views/CustomNativeComponentTest.harmony';
 
 const App = (): React.Node => {
   return (
-    <Pressable onPress={() => {
-      console.log("Hello World~")
-    }}>
-      <View style={styles.container}>
-        <Text style={styles.title}>
-          Hello World~
-        </Text>
-        <Text style={styles.content}>
-          在 VSCode 的控制台上输入d，便可看到手机上弹出了React Nactive Dev Menu对话框。
-          开发者可通过Element Inspector查看RN元素的盒子模型及样式。
-        </Text>
-      </View>
-    </Pressable>
+   <View>
+     <Pressable onPress={() => {
+       console.log("Hello World~")
+     }}>
+     <View style={styles.textContainer}>
+       <Text style={styles.title}>
+         Hello World~
+       </Text>
+       <Text style={styles.content}>
+       在 VSCode 的控制台上输入d，便可看到手机上弹出了React Nactive Dev Menu对话框。
+       开发者可通过Element Inspector查看RN元素的盒子模型及样式。
+       </Text>
+     </View>
+     </Pressable>
+
+     <CustomNativeComponentTest></CustomNativeComponentTest>
+   </View>
   );
 };
 
-const styles = StyleSheet.create({ //创建样式
-  container: {
-    backgroundColor: 'white',
-    height: '100%',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  title:{
-    textAlign: 'left',
-    fontSize:40
-  },
-  content:{
-    marginTop: 10,
-    fontSize: 16,
-    textAlign: 'left'
-  }
-});
-
 export default App;
+const styles = StyleSheet.create({//创建样式
+ textContainer: {
+   backgroundColor: 'white',
+   height: 400,
+   justifyContent: 'center',
+   padding: 20,
+ },
+ title:{
+   fontWeight: 'bold',
+   textAlign: 'left',
+   fontSize:40
+ },
+ content:{
+   marginTop: 10,
+   fontSize: 16,
+   textAlign: 'left'
+ }
+});

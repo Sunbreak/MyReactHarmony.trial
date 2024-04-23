@@ -31,6 +31,7 @@ if not defined NODE_OPTS set NODE_OPTS="--"
 @rem Find node.exe
 if defined NODE_HOME (
   set NODE_HOME=%NODE_HOME:"=%
+  set "PATH=%PATH%;%NODE_HOME%"
   set NODE_EXE_PATH=%NODE_HOME%/%NODE_EXE%
 )
 
@@ -38,7 +39,7 @@ if defined NODE_HOME (
 if "%ERRORLEVEL%" == "0" (
   "%NODE_EXE%" "%NODE_OPTS%" "%WRAPPER_MODULE_PATH%" %*
 ) else if exist "%NODE_EXE_PATH%" (
-  "%NODE_EXE%" "%NODE_OPTS%" "%WRAPPER_MODULE_PATH%" %*
+  "%NODE_EXE_PATH%" "%NODE_OPTS%" "%WRAPPER_MODULE_PATH%" %*
 ) else (
   echo.
   echo ERROR: NODE_HOME is not set and no 'node' command could be found in your PATH.

@@ -1,56 +1,88 @@
-import { ComponentBuilderContext } from 'rnoh';
-import { RNApp, RNAbility, AnyJSBundleProvider, MetroJSBundleProvider, ResourceJSBundleProvider } from 'rnoh'
-import { SampleView, SAMPLE_VIEW_TYPE, PropsDisplayer } from "rnoh-sample-package"
+
+import {
+  AnyJSBundleProvider,
+  ComponentBuilderContext,
+  FileJSBundleProvider,
+  MetroJSBundleProvider,
+  ResourceJSBundleProvider,
+  RNApp,
+  RNOHErrorDialog,
+  RNOHLogger,
+  TraceJSBundleProviderDecorator,
+  RNOHCoreContext
+} from '@rnoh/react-native-openharmony'
+import { SampleView, PropsDisplayer, GeneratedSampleView } from "rnoh-sample-package"
+import font from '@ohos.font';
 import { createRNPackages } from '../RNPackagesFactory'
 
 @Builder
-function CustomComponentBuilder(ctx: ComponentBuilderContext) {
-  if (ctx.componentName === SAMPLE_VIEW_TYPE) {
-    SampleView({
+export function buildCustomRNComponent(ctx: ComponentBuilderContext) {
+  if (ctx.componentName === GeneratedSampleView.NAME) {
+    GeneratedSampleView({
       ctx: ctx.rnComponentContext,
       tag: ctx.tag,
-      buildCustomComponent: CustomComponentBuilder
     })
-  } else if (ctx.componentName === PropsDisplayer.NAME) {
+  }
+  if (ctx.componentName === PropsDisplayer.NAME) {
     PropsDisplayer({
-      ctx: ctx. rnComponentContext,
+      ctx: ctx.rnComponentContext,
       tag: ctx.tag
     })
   }
 }
-
+const wrappedCustomRNComponentBuilder = wrapBuilder(buildCustomRNComponent)
 @Entry
 @Component
 struct Index {
-  @StorageLink('RNAbility') rnAbility: RNAbility | undefined = undefined
+  @StorageLink('RNOHCoreContext') private rnohCoreContext: RNOHCoreContext | undefined = undefined
   @State shouldShow: boolean = false
+  private logger!: RNOHLogger
 
   aboutToAppear() {
-    setTimeout(() => {
-      // Debugger don't work from the get-go, hence this artificial delay.
-      this.shouldShow = true
-    }, 1000)
+    this.logger = this.rnohCoreContext!.logger.clone("Index")
+    const stopTracing = this.logger.clone("aboutToAppear").startTracing()
+    this.shouldShow = true
+    stopTracing()
   }
 
   onBackPress(): boolean | undefined {
     // NOTE: this is required since `Ability`'s `onBackPressed` function always
     // terminates or puts the app in the background, but we want Ark to ignore it completely
     // when handled by RN
-    return this.rnAbility?.onBackPress();
+    this.rnohCoreContext!.dispatchBackPress()
+    return  true
+
   }
 
   build() {
     Column() {
-      if (this.rnAbility && this.shouldShow) {
+      if (this.rnohCoreContext && this.shouldShow) {
+        if (this.rnohCoreContext?.isDebugModeEnabled) {
+          RNOHErrorDialog({ ctx: this.rnohCoreContext })
+        }
         RNApp({
-          rnInstanceConfig: { createRNPackages },
+          rnInstanceConfig: {
+            createRNPackages,
+            enableNDKTextMeasuring: true,
+            enableBackgroundExecutor: false,
+          },
           initialProps: { "foo": "bar" } as Record<string, string>,
           appKey: "app_name",
-          buildCustomComponent: wrapBuilder(CustomComponentBuilder),
-          jsBundleProvider: new AnyJSBundleProvider([
-            new MetroJSBundleProvider(),
-            new ResourceJSBundleProvider(this.rnAbility.context.resourceManager, 'hermes_bundle.hbc'),
-            new ResourceJSBundleProvider(this.rnAbility.context.resourceManager, 'bundle.harmony.js')]),
+          wrappedCustomRNComponentBuilder: wrappedCustomRNComponentBuilder,
+          onSetUp: (rnInstance) => {
+            rnInstance.enableFeatureFlag("ENABLE_RN_INSTANCE_CLEAN_UP")
+          },
+          jsBundleProvider: new TraceJSBundleProviderDecorator(
+            new AnyJSBundleProvider([
+              new MetroJSBundleProvider(),
+              // NOTE: to load the bundle from file, place it in
+              // `/data/app/el2/100/base/com.rnoh.tester/files/bundle.harmony.js`
+              // on your device. The path mismatch is due to app sandboxing on HarmonyOS
+              new FileJSBundleProvider('/data/storage/el2/base/files/bundle.harmony.js'),
+              new ResourceJSBundleProvider(this.rnohCoreContext.uiAbilityContext.resourceManager, 'hermes_bundle.hbc'),
+              new ResourceJSBundleProvider(this.rnohCoreContext.uiAbilityContext.resourceManager, 'bundle.harmony.js')
+            ]),
+            this.rnohCoreContext.logger),
         })
       }
     }
@@ -58,4 +90,3 @@ struct Index {
     .width('100%')
   }
 }
-

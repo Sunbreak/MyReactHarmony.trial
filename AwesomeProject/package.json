@@ -6,14 +6,16 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
-    "start": "react-native start",
+    "start": "npm run codegen && react-native start",
     "test": "jest",
-    "dev": "react-native bundle-harmony --dev"
+    "dev": "npm run codegen && react-native bundle-harmony --dev",
+    "codegen": "react-native codegen-harmony --cpp-output-path ../MyApplication/entry/src/main/cpp/generated --rnoh-module-path ../MyApplication/entry/oh_modules/@rnoh/react-native-openharmony"
   },
   "dependencies": {
     "react": "18.2.0",
     "react-native": "0.72.5",
-    "react-native-harmony": "file:../react-native-harmony/rnoh-react-native-harmony-0.72.13.tgz"
+    "react-native-harmony": "file:../react-native-harmony/rnoh-react-native-harmony-0.72.20.tgz",
+    "react-native-harmony-sample-package": "file:./react-native-harmony-sample-package-1.0.0.tgz"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -33,7 +35,8 @@
     "typescript": "4.8.4"
   },
   "overrides": {
-    "@react-native-community/cli": "11.3.6"
+    "@react-native-community/cli": "11.3.6",
+    "@react-native/codegen": "0.74.0"
   },
   "resolutions": {
     "@react-native-community/cli": "11.3.6"
