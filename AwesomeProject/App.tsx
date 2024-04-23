@@ -1,7 +1,6 @@
 
 import * as React from 'react';
 import {Text, View, StyleSheet, Pressable} from 'react-native';//注入组件
-import { CustomNativeComponentTest } from './views/CustomNativeComponentTest.harmony';
 
 const App = (): React.Node => {
   return (
@@ -19,8 +18,6 @@ const App = (): React.Node => {
        </Text>
      </View>
      </Pressable>
-
-     <CustomNativeComponentTest></CustomNativeComponentTest>
    </View>
   );
 };

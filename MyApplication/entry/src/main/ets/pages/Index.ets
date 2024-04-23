@@ -11,22 +11,77 @@ import {
   TraceJSBundleProviderDecorator,
   RNOHCoreContext
 } from '@rnoh/react-native-openharmony'
-import { SampleView, PropsDisplayer, GeneratedSampleView } from "rnoh-sample-package"
-import font from '@ohos.font';
 import { createRNPackages } from '../RNPackagesFactory'
+import { RNLinearGradient, LINEAR_GRADIENT_TYPE } from "rnoh-linear-gradient"
+import { WebView, WEB_VIEW } from "rnoh-webview"
+import { SafeAreaProvider, SAFE_AREA_PROVIDER_TYPE, SafeAreaView, SAFE_AREA_VIEW_TYPE } from "rnoh-safe-area"
+import { RNGestureHandlerRootView } from "rnoh-gesture-handler"
+import { RNDateTimePicker, DATETIME_PICKER_VIEW_TYPE } from "rnoh-datetime-picker"
+import { RNAutoLayoutView, FLASH_LIST_TYPE, RNCellContainer, CELL_CONTAINER_TYPE } from "rnoh-flash-list"
+import { SVGView, SVG_VIEW_TYPE_NAME } from "rnoh-svg"
+import { LottieAnimationView, LOTTIE_TYPE } from "rnoh-lottie"
 
 @Builder
 export function buildCustomRNComponent(ctx: ComponentBuilderContext) {
-  if (ctx.componentName === GeneratedSampleView.NAME) {
-    GeneratedSampleView({
+  if (ctx.componentName === LINEAR_GRADIENT_TYPE) {
+    RNLinearGradient({
       ctx: ctx.rnComponentContext,
       tag: ctx.tag,
+      buildCustomComponent: buildCustomRNComponent
     })
-  }
-  if (ctx.componentName === PropsDisplayer.NAME) {
-    PropsDisplayer({
+  } else if (ctx.componentName === WEB_VIEW) {
+    WebView({
       ctx: ctx.rnComponentContext,
-      tag: ctx.tag
+      tag: ctx.tag,
+      // buildCustomComponent: buildCustomRNComponent
+    })
+  } else if (ctx.componentName === SAFE_AREA_PROVIDER_TYPE) {
+    SafeAreaProvider({
+      ctx: ctx.rnComponentContext,
+      tag: ctx.tag,
+      buildCustomComponent: buildCustomRNComponent
+    })
+  } else if (ctx.componentName === SAFE_AREA_VIEW_TYPE) {
+    SafeAreaView({
+      ctx: ctx.rnComponentContext,
+      tag: ctx.tag,
+      buildCustomComponent: buildCustomRNComponent
+    })
+  } else if (ctx.componentName === RNGestureHandlerRootView.NAME) {
+    RNGestureHandlerRootView({
+      ctx: ctx.rnComponentContext,
+      tag: ctx.tag,
+      buildCustomComponent: buildCustomRNComponent
+    })
+  } else if (ctx.componentName === DATETIME_PICKER_VIEW_TYPE) {
+    RNDateTimePicker({
+      ctx: ctx.rnComponentContext,
+      tag: ctx.tag,
+      // buildCustomComponent: buildCustomRNComponent
+    })
+  } else if (ctx.componentName === FLASH_LIST_TYPE) {
+    RNAutoLayoutView({
+      ctx: ctx.rnComponentContext,
+      tag: ctx.tag,
+      buildCustomComponent: buildCustomRNComponent
+    })
+  } else if (ctx.componentName === CELL_CONTAINER_TYPE) {
+    RNCellContainer({
+      ctx: ctx.rnComponentContext,
+      tag: ctx.tag,
+      buildCustomComponent: buildCustomRNComponent
+    })
+  } else if (ctx.componentName === SVG_VIEW_TYPE_NAME) {
+    SVGView({
+      ctx: ctx.rnComponentContext,
+      tag: ctx.tag,
+      // buildCustomComponent: buildCustomRNComponent
+    })
+  } else if (ctx.componentName === LOTTIE_TYPE) {
+    LottieAnimationView({
+      ctx: ctx.rnComponentContext,
+      tag: ctx.tag,
+      // buildCustomComponent: buildCustomRNComponent
     })
   }
 }

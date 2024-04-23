@@ -4,22 +4,12 @@
 
 #include "RNOH/Package.h"
 #include "RNOH/ArkTSTurboModule.h"
-#include "generated/GeneratedSampleTurboModule.h"
-#include "generated/GeneratedSampleTurboModule2.h"
-#include "generated/GeneratedSampleViewComponentDescriptor.h"
-#include "generated/GeneratedSampleViewJSIBinder.h"
 
 namespace rnoh {
 
 class RNOHGeneratedPackageTurboModuleFactoryDelegate : public TurboModuleFactoryDelegate {
   public:
     SharedTurboModule createTurboModule(Context ctx, const std::string &name) const override {
-        if (name == "GeneratedSampleTurboModule") {
-            return std::make_shared<GeneratedSampleTurboModule>(ctx, name);
-        }
-        if (name == "GeneratedSampleTurboModule2") {
-            return std::make_shared<GeneratedSampleTurboModule2>(ctx, name);
-        }
         return nullptr;
     };
 };
@@ -33,8 +23,6 @@ class GeneratedEventEmitRequestHandler : public EventEmitRequestHandler {
         }
 
         std::vector<std::string> supportedEventNames = {
-            "directEvent",
-            "bubblingEvent",
         };
         if (std::find(supportedEventNames.begin(), supportedEventNames.end(), ctx.eventName) != supportedEventNames.end()) {
             eventEmitter->dispatchEvent(ctx.eventName, ArkJS(ctx.env).getDynamic(ctx.payload));
@@ -52,13 +40,11 @@ class RNOHGeneratedPackage : public Package {
 
     std::vector<facebook::react::ComponentDescriptorProvider> createComponentDescriptorProviders() override {
         return {
-            facebook::react::concreteComponentDescriptorProvider<facebook::react::GeneratedSampleViewComponentDescriptor>(),
         };
     }
 
     ComponentJSIBinderByString createComponentJSIBinderByName() override {
         return {
-            {"GeneratedSampleView", std::make_shared<GeneratedSampleViewJSIBinder>()},
         };
     };
 
