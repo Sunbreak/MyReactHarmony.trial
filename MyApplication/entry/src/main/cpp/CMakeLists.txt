@@ -16,6 +16,7 @@ add_subdirectory("${RNOH_CPP_DIR}" ./rn)
 
 # RNOH_BEGIN: add_package_subdirectories
 add_subdirectory("${OH_MODULE_DIR}/@rnoh/sample-package/src/main/cpp" ./sample-package)
+add_subdirectory("${OH_MODULE_DIR}/@rnoh/view-shot/src/main/cpp" ./view-shot)
 # RNOH_END: add_package_subdirectories
 
 file(GLOB GENERATED_CPP_FILES "./generated/*.cpp")
@@ -29,4 +30,5 @@ target_link_libraries(rnoh_app PUBLIC rnoh)
 
 # RNOH_BEGIN: link_packages
 target_link_libraries(rnoh_app PUBLIC rnoh_sample_package)
+target_link_libraries(rnoh_app PUBLIC rnoh_view_shot)
 # RNOH_END: link_packages

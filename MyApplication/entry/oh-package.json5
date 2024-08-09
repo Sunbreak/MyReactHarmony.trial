@@ -9,5 +9,6 @@
   "dependencies": {
     "@rnoh/react-native-openharmony": "file:../libs/react_native_openharmony-5.0.0.302.har",
     "@rnoh/sample-package": "file:../libs/sample_package-5.0.0.302.har",
+    "@rnoh/view-shot": "file:../libs/view_shot-3.8.0-0.2.1.har",
   }
 }

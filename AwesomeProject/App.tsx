@@ -1,27 +1,38 @@
 
-import * as React from 'react';
+import React, { useRef, useEffect, useState } from 'react'
 import {Text, View, StyleSheet, Pressable} from 'react-native';//注入组件
-import { CustomNativeComponentTest } from './views/CustomNativeComponentTest.harmony';
+import { captureRef } from "react-native-view-shot";
 
 const App = (): React.Node => {
-  return (
-   <View>
-     <Pressable onPress={() => {
-       console.log("Hello World~")
-     }}>
-     <View style={styles.textContainer}>
-       <Text style={styles.title}>
-         Hello World~
-       </Text>
-       <Text style={styles.content}>
-       在 VSCode 的控制台上输入d，便可看到手机上弹出了React Nactive Dev Menu对话框。
-       开发者可通过Element Inspector查看RN元素的盒子模型及样式。
-       </Text>
-     </View>
-     </Pressable>
+  const viewRef = useRef();
+  const [url, setUrl] = useState('')
 
-     <CustomNativeComponentTest></CustomNativeComponentTest>
-   </View>
+  useEffect(() => {
+    // on mount
+    // @ts-ignore
+    // ref.current?.captureRef?.().then(uri => {
+    //   console.log("do something with ", uri);
+    //   setUrl(uri)
+    // });
+    captureRef(viewRef, {
+      format: "jpg",
+      quality: 0.8,
+      width: 100,
+      height: 100
+    }).then(
+      (uri) => {
+        console.log("Image saved to", uri)
+        setUrl(uri)
+      },
+      (error) => console.error("Oops, snapshot failed", error)
+    );
+  }, []);
+
+  return (
+    <View>
+      <Text ref={viewRef} style={{marginTop: 100, marginBottom: 50}}>...Something to rasterize...</Text>
+      <Text>截图存储地址：{url}</Text>
+    </View>
   );
 };
 
