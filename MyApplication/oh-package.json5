@@ -12,6 +12,6 @@
     "@ohos/hamock": "1.0.0"
   },
   "overrides": {
-    "@rnoh/react-native-openharmony": "file:./libs/react_native_openharmony-5.0.0.100.har"
+    "@rnoh/react-native-openharmony": "file:./libs/react_native_openharmony-5.0.0.100(SP1).har"
   }
 }

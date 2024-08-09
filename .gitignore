@@ -1,1 +1,8 @@
+# AwesomeProject/react-native-harmony-sample-package-1.0.0.tgz
+# react-native-harmony/rnoh-react-native-harmony-0.72.*.tgz
+# react-native-harmony-cli/rnoh-react-native-harmony-cli-0.0.*.tgz 
 react-native-harmony*
+
+# libs/react_native_openharmony-5.0.0.*.har
+# libs/sample_package-5.0.0.*.har
+MyApplication/libs
