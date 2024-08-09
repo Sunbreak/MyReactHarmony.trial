@@ -7,7 +7,7 @@
   "main": "",
   "version": "1.0.0",
   "dependencies": {
-    "@rnoh/react-native-openharmony": "file:../libs/react_native_openharmony-5.0.0.300.har",
-    "@rnoh/sample-package": "file:../libs/sample_package-5.0.0.300.har",
+    "@rnoh/react-native-openharmony": "file:../libs/react_native_openharmony-5.0.0.302.har",
+    "@rnoh/sample-package": "file:../libs/sample_package-5.0.0.302.har",
   }
 }
