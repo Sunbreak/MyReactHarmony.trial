@@ -11,7 +11,7 @@ import {
   TraceJSBundleProviderDecorator,
   RNOHCoreContext
 } from '@rnoh/react-native-openharmony'
-import { SampleView, PropsDisplayer, GeneratedSampleView } from "rnoh-sample-package"
+import { SampleView, PropsDisplayer, GeneratedSampleView } from "@rnoh/sample-package"
 import font from '@ohos.font';
 import { createRNPackages } from '../RNPackagesFactory'
 
@@ -65,6 +65,8 @@ struct Index {
             createRNPackages,
             enableNDKTextMeasuring: true,
             enableBackgroundExecutor: false,
+            enableCAPIArchitecture: true,
+            arkTsComponentNames: [],
           },
           initialProps: { "foo": "bar" } as Record<string, string>,
           appKey: "app_name",

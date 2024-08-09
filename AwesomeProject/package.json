@@ -9,12 +9,12 @@
     "start": "npm run codegen && react-native start",
     "test": "jest",
     "dev": "npm run codegen && react-native bundle-harmony --dev",
-    "codegen": "react-native codegen-harmony --cpp-output-path ../MyApplication/entry/src/main/cpp/generated --rnoh-module-path ../MyApplication/entry/oh_modules/@rnoh/react-native-openharmony"
+    "codegen": "react-native codegen-harmony --no-safety-check --cpp-output-path ../MyApplication/entry/src/main/cpp/generated --rnoh-module-path ../MyApplication/entry/oh_modules/@rnoh/react-native-openharmony"
   },
   "dependencies": {
     "react": "18.2.0",
     "react-native": "0.72.5",
-    "react-native-harmony": "file:../react-native-harmony/rnoh-react-native-harmony-0.72.26.tgz",
+    "react-native-harmony": "file:../react-native-harmony/rnoh-react-native-harmony-0.72.27.tgz",
     "react-native-harmony-sample-package": "file:./react-native-harmony-sample-package-1.0.0.tgz"
   },
   "devDependencies": {
